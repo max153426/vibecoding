@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ВАЙБКОДІНГ У СУЧАСНОМУ СВІТІ // Переваги та недоліки</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts з повною підтримкою української кирилиці (і, ї, є, ґ) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            asphalt: '#0c0c0f',
+            card: '#16161c',
+            cardLight: '#1f1f28',
+            limeNeon: '#ccff00',
+            magentaNeon: '#ff2a6d',
+            cyanNeon: '#00f0ff',
+            yellowNeon: '#ffe600',
+            inkPrimary: '#f3f3f7',
+            inkSecondary: '#c9c9d6',
+          },
+          fontFamily: {
+            display: ['"Unbounded"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* =====================================================================
+       БАЗОВІ ЗМІННІ ТА ДОСТУПНІСТЬ (ВИСОКИЙ КОНТРАСТ WCAG + ТИПОГРАФІКА)
+    ===================================================================== */
+    :root {
+      --base-font-size: 16px;
+      --bg-asphalt: #0c0c0f;
+      --lime: #ccff00;
+      --magenta: #ff2a6d;
+      --cyan: #00f0ff;
+      --yellow: #ffe600;
+    }
+
+    html {
+      font-size: var(--base-font-size);
+      background-color: var(--bg-asphalt);
+      color: #f3f3f7;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.68;
+      background-color: var(--bg-asphalt);
+      color: #f3f3f7;
+      overflow-x: hidden;
+      /* Темний бетонний фон із делікатною крапковою сіткою та м'якими неоновими засвітами */
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        radial-gradient(circle at 10% 8%, rgba(204, 255, 0, 0.07), transparent 32%),
+        radial-gradient(circle at 90% 22%, rgba(255, 42, 109, 0.07), transparent 34%),
+        radial-gradient(circle at 50% 80%, rgba(0, 240, 255, 0.05), transparent 40%);
+      background-size: 24px 24px, 100% 100%, 100% 100%, 100% 100%;
+    }
+
+    /* Легка бетонна зернистість, яка не заважає читати текст */
+    .concrete-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Чіткі нео-бруталістичні тіні для журнально-постерної естетики */
+    .brutal-shadow {
+      box-shadow: 6px 6px 0px #000000;
+    }
+    .brutal-shadow-sm {
+      box-shadow: 4px 4px 0px #000000;
+    }
+    .brutal-shadow-lime {
+      box-shadow: 6px 6px 0px #ccff00;
+    }
+    .brutal-shadow-magenta {
+      box-shadow: 6px 6px 0px #ff2a6d;
+    }
+    .brutal-shadow-cyan {
+      box-shadow: 5px 5px 0px #00f0ff;
+    }
+
+    /* Декоративна смужка малярного скотчу в стилі вуличного постера */
+    .poster-tape {
+      position: absolute;
+      top: -12px;
+      left: 28px;
+      width: 82px;
+      height: 22px;
+      background: rgba(245, 239, 210, 0.85);
+      border: 1.5px solid rgba(0, 0, 0, 0.45);
+      transform: rotate(-3deg);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+    }
+
+    /* Постерний заголовок з чітким контуром */
+    .poster-title {
+      text-shadow:
+        4px 4px 0px #000000,
+        -1px -1px 0px #000000;
+    }
+
+    /* Видимий фокус для клавіатурної навігації */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #00f0ff;
+      outline-offset: 2px;
+    }
+
+    /* Коректний відступ при скролі до секцій під фіксованим хедером */
+    section[id] {
+      scroll-margin-top: 88px;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen antialiased selection:bg-limeNeon selection:text-black">
+  <!-- Делікатна бетонна текстура -->
+  <div class="concrete-grain" aria-hidden="true"></div>
+
+  <!-- Індикатор прогресу читання у верхній частині екрана -->
+  <div
+    id="readingProgressWrap"
+    class="fixed top-0 left-0 right-0 h-1.5 bg-black/90 z-50"
+    role="progressbar"
+    aria-label="Прогрес читання сторінки"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  >
+    <div
+      id="readingProgressBar"
+      class="h-full w-0 bg-gradient-to-r from-limeNeon via-cyanNeon to-magentaNeon transition-[width] duration-75"
+    ></div>
+  </div>
+
+  <!-- Легке сповіщення при зміні розміру шрифту -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300"
+  >
+    <div class="bg-yellowNeon text-black font-mono text-xs sm:text-sm font-extrabold px-4 py-2.5 border-2 border-black brutal-shadow-sm rounded">
+      <span id="toastMessage">Розмір тексту оновлено</span>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       1. ФІКСОВАНА ВЕРХНЯ НАВІГАЦІЯ (ЧИСТА, ЛИШЕ РОЗДІЛИ САЙТУ)
+  ===================================================================== -->
+  <header class="sticky top-1.5 z-40 bg-asphalt/95 backdrop-blur-md border-b-2 border-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <!-- Логотип -->
+      <a
+        href="#top"
+        class="inline-flex items-center gap-2 bg-limeNeon text-black px-3.5 py-1.5 border-2 border-black brutal-shadow-sm hover:-translate-y-0.5 transition-transform shrink-0 rounded-sm"
+      >
+        <span class="font-display font-black text-sm sm:text-base tracking-tight">VIBE//CODE</span>
+      </a>
+
+      <!-- Навігація (Десктоп) -->
+      <nav aria-label="Основна навігація" class="hidden lg:flex items-center gap-1.5">
+        <a href="#essence" class="font-mono text-xs font-bold uppercase px-3.5 py-2 text-inkSecondary hover:text-black hover:bg-cyanNeon rounded transition-colors">
+          Суть
+        </a>
+        <a href="#pros" class="font-mono text-xs font-bold uppercase px-3.5 py-2 text-inkSecondary hover:text-black hover:bg-limeNeon rounded transition-colors">
+          Переваги
+        </a>
+        <a href="#cons" class="font-mono text-xs font-bold uppercase px-3.5 py-2 text-inkSecondary hover:text-white hover:bg-magentaNeon rounded transition-colors">
+          Недоліки
+        </a>
+        <a href="#scenarios" class="font-mono text-xs font-bold uppercase px-3.5 py-2 text-inkSecondary hover:text-black hover:bg-yellowNeon rounded transition-colors">
+          Сценарії
+        </a>
+        <a href="#verdict" class="font-mono text-xs font-bold uppercase px-3.5 py-2 text-inkSecondary hover:text-black hover:bg-white rounded transition-colors">
+          Висновок
+        </a>
+      </nav>
+
+      <!-- Панель доступності (A- / A / A+) + Кнопка мобільного меню -->
+      <div class="flex items-center gap-2">
+        <div
+          class="flex items-center bg-card border-2 border-zinc-700 rounded overflow-hidden"
+          role="group"
+          aria-label="Налаштування розміру шрифту"
+        >
+          <button
+            type="button"
+            onclick="changeFontSize(-1)"
+            class="font-mono text-xs font-bold px-2.5 py-1.5 text-inkSecondary hover:bg-zinc-700 hover:text-white transition-colors"
+            title="Зменшити розмір шрифту"
+            aria-label="Зменшити розмір шрифту"
+          >
+            A-
+          </button>
+          <button
+            type="button"
+            onclick="resetFontSize()"
+            class="font-mono text-xs font-extrabold px-2.5 py-1.5 bg-zinc-800 text-limeNeon border-x border-zinc-700 hover:bg-limeNeon hover:text-black transition-colors"
+            title="Стандартний розмір шрифту"
+            aria-label="Стандартний розмір шрифту"
+          >
+            A
+          </button>
+          <button
+            type="button"
+            onclick="changeFontSize(1)"
+            class="font-mono text-xs font-bold px-2.5 py-1.5 text-inkSecondary hover:bg-zinc-700 hover:text-white transition-colors"
+            title="Збільшити розмір шрифту"
+            aria-label="Збільшити розмір шрифту"
+          >
+            A+
+          </button>
+        </div>
+
+        <button
+          type="button"
+          id="mobileMenuBtn"
+          class="lg:hidden bg-card text-limeNeon border-2 border-zinc-700 rounded px-3 py-1.5 font-mono text-sm font-bold hover:border-limeNeon transition-colors"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+          aria-label="Відкрити меню навігації"
+        >
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <!-- Мобільна навігація -->
+    <nav id="mobileNav" aria-label="Мобільна навігація" class="hidden lg:hidden bg-card border-t-2 border-zinc-800 px-4 py-3">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <a href="#essence" class="mobile-link font-mono text-xs font-bold uppercase text-center py-2.5 px-2 bg-asphalt border border-zinc-700 text-cyanNeon rounded">Суть</a>
+        <a href="#pros" class="mobile-link font-mono text-xs font-bold uppercase text-center py-2.5 px-2 bg-asphalt border border-zinc-700 text-limeNeon rounded">Переваги</a>
+        <a href="#cons" class="mobile-link font-mono text-xs font-bold uppercase text-center py-2.5 px-2 bg-asphalt border border-zinc-700 text-magentaNeon rounded">Недоліки</a>
+        <a href="#scenarios" class="mobile-link font-mono text-xs font-bold uppercase text-center py-2.5 px-2 bg-asphalt border border-zinc-700 text-yellowNeon rounded">Сценарії</a>
+        <a href="#verdict" class="mobile-link font-mono text-xs font-bold uppercase text-center py-2.5 px-2 bg-asphalt border border-zinc-700 text-inkPrimary rounded col-span-2 sm:col-span-1">Висновок</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="relative z-10">
+    <!-- =====================================================================
+         2. HERO-СЕКЦІЯ (ГОЛОВНИЙ ЕКРАН — STREET ART EDITORIAL)
+    ===================================================================== -->
+    <section class="pt-12 pb-16 sm:pt-20 sm:pb-24 px-4 sm:px-6 relative overflow-hidden">
+      <!-- Трафаретний технічний маркер на фоні для десктопу -->
+      <div class="hidden xl:block absolute top-14 right-10 font-mono text-[11px] text-zinc-600 tracking-widest select-none pointer-events-none leading-6 text-right" aria-hidden="true">
+        // URBAN EDITORIAL // EDITION 2026<br />
+        // TOPIC: VIBE CODING ANALYSIS<br />
+        // READABILITY: HIGH CONTRAST
+      </div>
+
+      <div class="max-w-7xl mx-auto">
+        <!-- Постерні стікери -->
+        <div class="flex flex-wrap items-center gap-2.5 mb-6">
+          <span class="font-mono text-xs font-extrabold uppercase bg-yellowNeon text-black px-3 py-1 border-2 border-black brutal-shadow-sm -rotate-1 rounded-sm">
+            АНДРЕЙ КАРПАТИ • 2025
+          </span>
+          <span class="font-mono text-xs font-extrabold uppercase bg-limeNeon text-black px-3 py-1 border-2 border-black brutal-shadow-sm rotate-1 rounded-sm">
+            10 ПЕРЕВАГ
+          </span>
+          <span class="font-mono text-xs font-extrabold uppercase bg-magentaNeon text-white px-3 py-1 border-2 border-black brutal-shadow-sm -rotate-1 rounded-sm">
+            10 НЕДОЛІКІВ
+          </span>
+        </div>
+
+        <!-- Головний постерний заголовок -->
+        <div class="max-w-5xl">
+          <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-inkPrimary leading-[1.1] tracking-tight poster-title">
+            ВАЙБКОДІНГ<br />
+            <span class="text-limeNeon">У СУЧАСНОМУ СВІТІ</span>
+          </h1>
+
+          <p class="mt-5 font-display font-bold text-lg sm:text-2xl text-cyanNeon leading-snug max-w-3xl">
+            Коли програмування перетворюється з ручного набору синтаксису на діалог із штучним інтелектом
+          </p>
+        </div>
+
+        <!-- Вступний редакційний постер -->
+        <div class="mt-8 bg-card border-2 border-zinc-700 brutal-shadow p-6 sm:p-8 max-w-4xl relative rounded-lg">
+          <div class="poster-tape" aria-hidden="true"></div>
+          <p class="text-base sm:text-lg text-inkPrimary leading-relaxed">
+            У лютому 2025 року відомий дослідник штучного інтелекту та співзасновник OpenAI <strong>Андрей Карпати (Andrej Karpathy)</strong> популяризував термін <strong>«вайбкодінг» (Vibe Coding)</strong>. Це підхід до розробки програмного забезпечення, за якого людина формулює ідею та вимоги природною мовою, а написання, редагування й виправлення коду делегує ШІ-агентам. Нижче — повний і неупереджений розбір того, чому цей метод змінює індустрію та які серйозні ризики він приховує.
+          </p>
+
+          <!-- Швидкі якірні переходи -->
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="#essence"
+              class="font-mono text-xs sm:text-sm font-extrabold uppercase bg-cyanNeon text-black px-5 py-3 border-2 border-black brutal-shadow-sm hover:-translate-y-0.5 transition-transform rounded"
+            >
+              Що це таке?
+            </a>
+            <a
+              href="#pros"
+              class="font-mono text-xs sm:text-sm font-extrabold uppercase bg-limeNeon text-black px-5 py-3 border-2 border-black brutal-shadow-sm hover:-translate-y-0.5 transition-transform rounded"
+            >
+              10 Переваг →
+            </a>
+            <a
+              href="#cons"
+              class="font-mono text-xs sm:text-sm font-extrabold uppercase bg-cardLight text-magentaNeon px-5 py-3 border-2 border-magentaNeon hover:bg-magentaNeon hover:text-white transition-colors rounded"
+            >
+              10 Недоліків →
+            </a>
+          </div>
+        </div>
+
+        <!-- 3 оглядові картки-тези -->
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="bg-card border-2 border-zinc-800 hover:border-cyanNeon transition-colors p-6 rounded-lg brutal-shadow-sm">
+            <span class="font-mono text-xs font-extrabold uppercase text-cyanNeon tracking-wider">01 // НОВА ПАРАДИГМА</span>
+            <h2 class="font-display font-bold text-lg text-inkPrimary mt-2 mb-2">Мова замість синтаксису</h2>
+            <p class="text-sm sm:text-base text-inkSecondary">
+              Головним інструментом стає не знання кожної дужки, а здатність чітко пояснити задачу, контекст і критерії якості.
+            </p>
+          </div>
+
+          <div class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 rounded-lg brutal-shadow-sm">
+            <span class="font-mono text-xs font-extrabold uppercase text-limeNeon tracking-wider">02 // ВИБУХ ШВИДКОСТІ</span>
+            <h2 class="font-display font-bold text-lg text-inkPrimary mt-2 mb-2">Від ідеї до MVP за години</h2>
+            <p class="text-sm sm:text-base text-inkSecondary">
+              Прототипи, лендінги й внутрішні інструменти створюються в рази швидше, відкриваючи двері в розробку для мільйонів людей.
+            </p>
+          </div>
+
+          <div class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 rounded-lg brutal-shadow-sm">
+            <span class="font-mono text-xs font-extrabold uppercase text-magentaNeon tracking-wider">03 // ЦІНА ШВИДКОСТІ</span>
+            <h2 class="font-display font-bold text-lg text-inkPrimary mt-2 mb-2">Ризики без контролю</h2>
+            <p class="text-sm sm:text-base text-inkSecondary">
+              Сліпа довіра до згенерованого коду часто веде до прогалин у безпеці, «чорної скриньки» та проблем при масштабуванні.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         3. СЕКЦІЯ «ЩО ТАКЕ ВАЙБКОДІНГ?»
+    ===================================================================== -->
+    <section id="essence" class="py-16 sm:py-24 px-4 sm:px-6 border-t-2 border-zinc-800">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-10">
+          <span class="inline-block font-mono text-xs font-extrabold uppercase bg-cyanNeon text-black px-3 py-1 border-2 border-black mb-3 rounded-sm">
+            РОЗДІЛ 01 // СУТЬ КОНЦЕПЦІЇ
+          </span>
+          <h2 class="font-display font-black text-2xl sm:text-4xl md:text-5xl text-inkPrimary leading-tight">
+            ЩО ТАКЕ <span class="text-cyanNeon">ВАЙБКОДІНГ?</span>
+          </h2>
+        </div>
+
+        <!-- Пояснення концепції -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+          <div class="lg:col-span-7 bg-card border-2 border-zinc-700 p-6 sm:p-8 rounded-lg brutal-shadow-sm space-y-4">
+            <p class="text-base sm:text-lg text-inkPrimary">
+              <strong>Вайбкодінг</strong> — це стиль створення програм, у якому розробник керує процесом на рівні намірів і результату, а не ручного редагування кожного файлу. Замість того щоб самостійно писати сотні рядків HTML, JavaScript чи Python, людина ставить завдання ШІ-агенту, оцінює роботу готового застосунку в браузері й просить внести правки звичайними реченнями.
+            </p>
+            <p class="text-base text-inkSecondary">
+              На відміну від звичайного автодоповнення коду, де програміст усе одно контролює кожен рядок, у вайбкодінгу акцент зміщується на швидкі ітерації: «додай темну тему», «виправ цю помилку з консолі», «зроби адаптивну сітку під смартфон».
+            </p>
+          </div>
+
+          <div class="lg:col-span-5 bg-card border-2 border-zinc-700 p-6 sm:p-8 rounded-lg brutal-shadow-sm flex flex-col justify-between gap-4">
+            <div class="border-l-4 border-zinc-500 pl-4">
+              <div class="font-mono text-xs font-bold uppercase text-zinc-400">Традиційна розробка</div>
+              <p class="text-sm sm:text-base text-inkSecondary mt-1">Повний ручний контроль: архітектура, синтаксис, залежності та пошук багів лежать виключно на людині.</p>
+            </div>
+            <div class="border-l-4 border-yellowNeon pl-4">
+              <div class="font-mono text-xs font-bold uppercase text-yellowNeon">ШІ-асистування</div>
+              <p class="text-sm sm:text-base text-inkSecondary mt-1">Людина пише код і перевіряє кожен блок, а ШІ прискорює рутину підказками та генерацією окремих функцій.</p>
+            </div>
+            <div class="border-l-4 border-limeNeon pl-4">
+              <div class="font-mono text-xs font-bold uppercase text-limeNeon">Вайбкодінг</div>
+              <p class="text-sm sm:text-base text-inkPrimary mt-1">Людина задає напрям («вайб») і перевіряє поведінку продукту, а ШІ-агент самостійно пише та змінює кодову базу.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Візуальна схема з 4 кроків -->
+        <div class="mb-12">
+          <h3 class="font-display font-bold text-lg sm:text-2xl text-inkPrimary mb-6">
+            Цикл вайбкодінгу: <span class="text-yellowNeon">4 ключові кроки</span>
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Крок 1 -->
+            <div class="bg-card border-2 border-zinc-700 p-6 rounded-lg brutal-shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs font-extrabold bg-limeNeon text-black px-2.5 py-1 border border-black rounded-sm">01 // ІДЕЯ</span>
+                <span class="hidden lg:inline font-mono text-xl font-black text-limeNeon" aria-hidden="true">→</span>
+              </div>
+              <h4 class="font-display font-bold text-base sm:text-lg text-inkPrimary mb-2">Ідея / Промпт</h4>
+              <p class="text-sm sm:text-base text-inkSecondary">
+                Опис бажаного продукту, дизайну, функцій та обмежень зрозумілою природною мовою.
+              </p>
+            </div>
+
+            <!-- Крок 2 -->
+            <div class="bg-card border-2 border-zinc-700 p-6 rounded-lg brutal-shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs font-extrabold bg-cyanNeon text-black px-2.5 py-1 border border-black rounded-sm">02 // КОД</span>
+                <span class="hidden lg:inline font-mono text-xl font-black text-cyanNeon" aria-hidden="true">→</span>
+              </div>
+              <h4 class="font-display font-bold text-base sm:text-lg text-inkPrimary mb-2">Генерація коду ШІ</h4>
+              <p class="text-sm sm:text-base text-inkSecondary">
+                ШІ-агент створює файли, налаштовує стилі, бізнес-логіку та підключає необхідні пакети.
+              </p>
+            </div>
+
+            <!-- Крок 3 -->
+            <div class="bg-card border-2 border-zinc-700 p-6 rounded-lg brutal-shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs font-extrabold bg-yellowNeon text-black px-2.5 py-1 border border-black rounded-sm">03 // ТЕСТ</span>
+                <span class="hidden lg:inline font-mono text-xl font-black text-yellowNeon" aria-hidden="true">→</span>
+              </div>
+              <h4 class="font-display font-bold text-base sm:text-lg text-inkPrimary mb-2">Тестування результату</h4>
+              <p class="text-sm sm:text-base text-inkSecondary">
+                Запуск прототипу, перевірка інтерфейсу, сценаріїв користувача, адаптивності та пошук збоїв.
+              </p>
+            </div>
+
+            <!-- Крок 4 -->
+            <div class="bg-card border-2 border-zinc-700 p-6 rounded-lg brutal-shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-xs font-extrabold bg-magentaNeon text-white px-2.5 py-1 border border-black rounded-sm">04 // ПРАВКИ</span>
+                <span class="hidden lg:inline font-mono text-xl font-black text-magentaNeon" aria-hidden="true">↺</span>
+              </div>
+              <h4 class="font-display font-bold text-base sm:text-lg text-inkPrimary mb-2">Ітерація природною мовою</h4>
+              <p class="text-sm sm:text-base text-inkSecondary">
+                Уточнення деталей текстом або передача тексту помилки назад у чат до досягнення потрібного результату.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ключові сучасні інструменти -->
+        <div class="bg-card border-2 border-zinc-700 p-6 sm:p-8 rounded-lg brutal-shadow-sm">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div>
+              <span class="font-mono text-xs font-bold uppercase text-yellowNeon">// ЕКОСИСТЕМА ІНСТРУМЕНТІВ</span>
+              <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mt-1">Ключові платформи для вайбкодінгу</h3>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-limeNeon border-2 border-limeNeon px-3.5 py-1.5 rounded -rotate-1">Cursor</span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-cyanNeon border-2 border-cyanNeon px-3.5 py-1.5 rounded rotate-1">Windsurf</span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-inkPrimary border-2 border-zinc-400 px-3.5 py-1.5 rounded -rotate-1">GitHub Copilot</span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-yellowNeon border-2 border-yellowNeon px-3.5 py-1.5 rounded rotate-1">Claude Code</span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-magentaNeon border-2 border-magentaNeon px-3.5 py-1.5 rounded -rotate-1">Bolt.new</span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-limeNeon border-2 border-limeNeon px-3.5 py-1.5 rounded rotate-1">Lovable</span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-asphalt text-cyanNeon border-2 border-cyanNeon px-3.5 py-1.5 rounded -rotate-1">Replit Agent</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         4. СЕКЦІЯ «10 ПЕРЕВАГ ВАЙБКОДІНГУ»
+    ===================================================================== -->
+    <section id="pros" class="py-16 sm:py-24 px-4 sm:px-6 border-t-2 border-zinc-800">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <span class="inline-block font-mono text-xs font-extrabold uppercase bg-limeNeon text-black px-3 py-1 border-2 border-black mb-3 rounded-sm">
+              РОЗДІЛ 02 // СИЛЬНІ СТОРОНИ
+            </span>
+            <h2 class="font-display font-black text-2xl sm:text-4xl md:text-5xl text-inkPrimary leading-tight">
+              10 ПЕРЕВАГ <span class="text-limeNeon">ВАЙБКОДІНГУ</span>
+            </h2>
+          </div>
+          <p class="text-sm sm:text-base text-inkSecondary max-w-md">
+            Чому сучасні команди, стартапи та незалежні творці активно переходять на ШІ-орієнтовану розробку.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Перевага 01 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">01</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#ШВИДКІСТЬ_MVP</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Блискавична швидкість прототипування (MVP за години замість тижнів)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Робочий прототип із базовим інтерфейсом, формами та інтерактивною логікою збирається за один вечір. Це дає змогу показати живий продукт користувачам або інвесторам майже одразу після появи ідеї, не витрачаючи місяці на підготовку.
+            </p>
+          </article>
+
+          <!-- Перевага 02 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">02</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#ДОСТУПНІСТЬ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Низький поріг входу для нетехнічних спеціалістів
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Дизайнери, продакт-менеджери, маркетологи, викладачі та підприємці отримують можливість самостійно створювати сайти й застосунки без багаторічного вивчення мов програмування. Ідея більше не застрягає в очікуванні вільної команди розробників.
+            </p>
+          </article>
+
+          <!-- Перевага 03 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">03</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#ПРОДУКТ_І_UX</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Фокус на продукті, бізнес-логіці та UX замість синтаксису
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Замість витрачання енергії на дрібні синтаксичні помилки та запам'ятовування назв методів творець зосереджується на головному: яку проблему вирішує сервіс, наскільки зручним є інтерфейс і як покращити досвід користувача.
+            </p>
+          </article>
+
+          <!-- Перевага 04 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">04</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#АНТИРУТИНА</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Автоматизація рутини та шаблонного коду (boilerplate)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Однотипні форми, конфігураційні файли, типові CRUD-операції, адаптивна верстка таблиць чи конвертація даних генеруються за лічені секунди. Це позбавляє розробку нудної механічної роботи та зберігає ментальний ресурс.
+            </p>
+          </article>
+
+          <!-- Перевага 05 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">05</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#ЕКОНОМІЯ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Економія бюджету на старті для стартапів і соло-розробників
+            </h3>
+            <p class="text-base text-inkSecondary">
+              На ранніх етапах бізнесу більше не потрібно одразу наймати велику команду інженерів, щоб перевірити першу версію продукту. Витрати на запуск прототипу скорочуються в рази — часто до вартості підписки на один-два ШІ-сервіси.
+            </p>
+          </article>
+
+          <!-- Перевага 06 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">06</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#НАВЧАННЯ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Миттєве вивчення нових технологій і фреймворків на практиці
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Потрібно спробувати незнайому бібліотеку чи іншу мову програмування? ШІ одразу показує робочий приклад, пояснює призначення кожного блоку та допомагає швидко розібратися в екосистемі без годин читання сухої документації.
+            </p>
+          </article>
+
+          <!-- Перевага 07 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">07</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#ГІПОТЕЗИ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Легкість експериментів та перевірки гіпотез
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Коли створення нової функції чи альтернативного дизайну займає 10 хвилин, зникає страх помилитися. Можна легко протестувати 3–4 різні концепції інтерфейсу, обрати найкращу й без жалю відкинути невдалі варіанти.
+            </p>
+          </article>
+
+          <!-- Перевага 08 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">08</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#ШВИДКИЙ_ФІКС</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Швидке виправлення дрібних багів та рефакторинг
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Типові помилки верстки, зламані імпорти, перейменування змінних чи переписування громіздких функцій у чистіший вигляд виконуються за один запит. Достатньо передати ШІ текст помилки з консолі, щоб отримати пояснення й готовий фікс.
+            </p>
+          </article>
+
+          <!-- Перевага 09 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">09</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#СОЛО_КОМАНДА</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Продуктивність одного розробника на рівні міні-команди
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Один спеціаліст із сильним розумінням продукту тепер може самостійно закривати фронтенд, базовий бекенд, налаштування бази даних, стилізацію та документацію. Це робить незалежних розробників конкурентоспроможними на рівні студій.
+            </p>
+          </article>
+
+          <!-- Перевага 10 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-limeNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-limeNeon leading-none">10</span>
+              <span class="font-mono text-xs font-bold uppercase bg-limeNeon/15 text-limeNeon border border-limeNeon/50 px-2.5 py-1 rounded">#MICRO_APPS</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Демократизація створення персонального софту (micro-apps під власні задачі)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              З'явився цілий клас «одноразових» або персональних програм: власний трекер звичок, конвертер файлів, калькулятор бюджету чи парсер для навчання. Користувач створює інструмент точно під свої потреби за пів години, а не шукає платні аналоги.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         5. СЕКЦІЯ «10 НЕДОЛІКІВ ТА РИЗИКІВ ВАЙБКОДІНГУ»
+    ===================================================================== -->
+    <section id="cons" class="py-16 sm:py-24 px-4 sm:px-6 border-t-2 border-zinc-800">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <span class="inline-block font-mono text-xs font-extrabold uppercase bg-magentaNeon text-white px-3 py-1 border-2 border-black mb-3 rounded-sm">
+              РОЗДІЛ 03 // РИЗИКИ ТА ОБМЕЖЕННЯ
+            </span>
+            <h2 class="font-display font-black text-2xl sm:text-4xl md:text-5xl text-inkPrimary leading-tight">
+              10 НЕДОЛІКІВ <span class="text-magentaNeon">ТА РИЗИКІВ</span>
+            </h2>
+          </div>
+          <p class="text-sm sm:text-base text-inkSecondary max-w-md">
+            Головні небезпеки, з якими стикаються проєкти, коли швидкість генерації переважає над інженерною дисципліною.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Недолік 01 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">01</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#BLACK_BOX</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Втрата розуміння власної кодової бази («чорна скринька»)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Коли сотні рядків коду приймаються без уважного читання, автор перестає розуміти, як усередині працює його власний застосунок. Проєкт перетворюється на «чорну скриньку», яку страшно змінювати вручну, щоб нічого не зламати.
+            </p>
+          </article>
+
+          <!-- Недолік 02 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">02</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#ВРАЗЛИВОСТІ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Критичні вразливості безпеки (витоки ключів, SQL-ін'єкції, слабка авторизація)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              ШІ прагне якнайшвидше отримати робочий результат, тому нерідко нехтує захистом: залишає секретні API-ключі у відкритому коді, пропускає перевірку прав доступу чи формує небезпечні запити до бази даних, відкриваючи двері для атак.
+            </p>
+          </article>
+
+          <!-- Недолік 03 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">03</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#ТЕХБОРГ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Стрімке накопичення технічного боргу та «спагетті-код»
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Серія швидких правок через чат часто породжує дублювання логіки, зайві бібліотеки та суперечливі фрагменти коду. Без регулярного наведення ладу проєкт швидко обростає «милицями», а кожна наступна зміна займає дедалі більше часу.
+            </p>
+          </article>
+
+          <!-- Недолік 04 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">04</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#МАСШТАБ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Складність масштабування та підтримки великих проєктів
+            </h3>
+            <p class="text-base text-inkSecondary">
+              На рівні невеликого сайту ШІ легко утримує весь контекст, але в системах із десятками модулів, складними ролями користувачів і сторонніми інтеграціями модель починає «забувати» зв'язки між файлами та ламати сусідній функціонал.
+            </p>
+          </article>
+
+          <!-- Недолік 05 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">05</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#ГАЛЮЦИНАЦІЇ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Галюцинації ШІ (вигадані бібліотеки, застарілі API, помилкова логіка)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Мовні моделі здатні впевнено посилатися на неіснуючі пакети, вигадувати неіснуючі параметри або використовувати синтаксис версій трирічної давнини. На перший погляд такий код виглядає переконливо, але викликає приховані збої.
+            </p>
+          </article>
+
+          <!-- Недолік 06 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">06</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#БАЗОВІ_НАВИЧКИ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Деградація базових інженерних навичок у початківців
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Якщо новачок покладається лише на генерацію й не розбирає принципи роботи алгоритмів, мережі та пам'яті, у нього не формується міцний фундамент. Без доступу до ШІ або на технічній співбесіді такі прогалини стають критичними.
+            </p>
+          </article>
+
+          <!-- Недолік 07 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">07</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#ВИТРАТИ_API</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Приховані витрати на API-токени та платні підписки
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Активна робота агентів із великою кодовою базою швидко спалює ліміти токенів. У результаті регулярна розробка вимагає дорогих тарифних планів, додаткової оплати API-запитів та створює фінансову залежність від хмарних провайдерів.
+            </p>
+          </article>
+
+          <!-- Недолік 08 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">08</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#ЦИКЛ_БАГІВ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Проблеми з дебагінгом складних багів (цикл нескінченних правок)
+            </h3>
+            <p class="text-base text-inkSecondary">
+              У нестандартних ситуаціях — асинхронних конфліктах, станах перегонів або специфічних багах інтеграцій — ШІ часто потрапляє в замкнене коло: виправляє одну помилку, ламає іншу, а потім повертає попередній баг назад.
+            </p>
+          </article>
+
+          <!-- Недолік 09 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">09</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#ЛІЦЕНЗІЇ</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Юридичні ризики, ліцензування та авторські права на код
+            </h3>
+            <p class="text-base text-inkSecondary">
+              Питання власності на згенерований код досі лишається складною юридичною зоною. Крім того, модель може відтворити фрагменти з ліцензійними обмеженнями або поставити під загрозу конфіденційність, якщо передавати в хмару комерційну таємницю.
+            </p>
+          </article>
+
+          <!-- Недолік 10 -->
+          <article class="bg-card border-2 border-zinc-800 hover:border-magentaNeon transition-colors p-6 sm:p-7 rounded-lg brutal-shadow-sm flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="font-display font-black text-3xl sm:text-4xl text-magentaNeon leading-none">10</span>
+              <span class="font-mono text-xs font-bold uppercase bg-magentaNeon/15 text-magentaNeon border border-magentaNeon/50 px-2.5 py-1 rounded">#АРХІТЕКТУРА</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-inkPrimary mb-2.5 leading-snug">
+              Відсутність архітектурного бачення та оптимізації продуктивності
+            </h3>
+            <p class="text-base text-inkSecondary">
+              ШІ розв'язує поточну локальну задачу, але рідко проєктує систему на роки вперед. Через це страждають швидкодія, структура бази даних, кешування й витрати пам'яті — проблеми, які гостро проявляються під реальним навантаженням.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         6. СЕКЦІЯ «ДЕ ЦЕ ПРАЦЮЄ, А ДЕ НІ» (ПОРІВНЯЛЬНІ СЦЕНАРІЇ)
+    ===================================================================== -->
+    <section id="scenarios" class="py-16 sm:py-24 px-4 sm:px-6 border-t-2 border-zinc-800">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-10">
+          <span class="inline-block font-mono text-xs font-extrabold uppercase bg-yellowNeon text-black px-3 py-1 border-2 border-black mb-3 rounded-sm">
+            РОЗДІЛ 04 // ПРАКТИЧНІ СЦЕНАРІЇ
+          </span>
+          <h2 class="font-display font-black text-2xl sm:text-4xl md:text-5xl text-inkPrimary leading-tight">
+            ДЕ ЦЕ ПРАЦЮЄ, <span class="text-yellowNeon">А ДЕ — НІ</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-7">
+          <!-- Блок 1: Ідеально підходить -->
+          <div class="bg-card border-2 border-limeNeon/80 rounded-lg p-6 sm:p-8 brutal-shadow-lime">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-800">
+              <span class="font-mono text-xs sm:text-sm font-black bg-limeNeon text-black px-3 py-1 border border-black rounded-sm">✓ ЗЕЛЕНЕ СВІТЛО</span>
+              <h3 class="font-display font-bold text-xl sm:text-2xl text-inkPrimary">Ідеально підходить</h3>
+            </div>
+
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-limeNeon mt-0.5 shrink-0">[+]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Лендінги та інформаційні сайти</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Промо-сторінки, портфоліо, візитівки та презентаційні проєкти з акцентом на візуальну подачу.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-limeNeon mt-0.5 shrink-0">[+]</span>
+                <div>
+                  <strong class="text-inkPrimary block">MVP та перевірка бізнес-гіпотез</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Швидкий запуск першої версії стартапу, щоб зібрати відгуки реальних користувачів.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-limeNeon mt-0.5 shrink-0">[+]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Хакатони та конкурси</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Ситуації з жорстким обмеженням часу (24–48 годин), де вирішальну роль відіграє темп реалізації.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-limeNeon mt-0.5 shrink-0">[+]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Пет-проєкти та експерименти</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Особисті ідеї, навчальні візуалізації, невеликі ігри та творчі вебзастосунки.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-limeNeon mt-0.5 shrink-0">[+]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Внутрішні утиліти та скрипти</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Невеликі інструменти автоматизації, конвертери, генератори звітів та дашборди для власних потреб.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Блок 2: Високий ризик -->
+          <div class="bg-card border-2 border-magentaNeon/80 rounded-lg p-6 sm:p-8 brutal-shadow-magenta">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-800">
+              <span class="font-mono text-xs sm:text-sm font-black bg-magentaNeon text-white px-3 py-1 border border-black rounded-sm">✕ ЧЕРВОНА ЗОНА</span>
+              <h3 class="font-display font-bold text-xl sm:text-2xl text-inkPrimary">Високий ризик</h3>
+            </div>
+
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-magentaNeon mt-0.5 shrink-0">[!]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Фінтех та банківські системи</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Будь-яка помилка в транзакціях, балансах чи правах доступу призводить до прямих фінансових збитків.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-magentaNeon mt-0.5 shrink-0">[!]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Медицина та охорона здоров'я</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Програмне забезпечення для діагностики й обробки медичних даних потребує суворої сертифікації та надійності.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-magentaNeon mt-0.5 shrink-0">[!]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Високонавантажені системи (Highload)</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Сервіси з мільйонами запитів вимагають глибокої інженерної оптимізації пам'яті, мережі та баз даних.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-magentaNeon mt-0.5 shrink-0">[!]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Критична інфраструктура</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Енергетика, транспорт, промислова автоматика й оборонні рішення, де збій загрожує безпеці людей.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono font-extrabold text-magentaNeon mt-0.5 shrink-0">[!]</span>
+                <div>
+                  <strong class="text-inkPrimary block">Криптографія та кібербезпека</strong>
+                  <span class="text-sm sm:text-base text-inkSecondary">Механізми шифрування, автентифікації та захисту персональних даних вимагають ручного аудиту експертами.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         7. СЕКЦІЯ «ВИСНОВОК: МАЙБУТНЄ РОЗРОБКИ»
+    ===================================================================== -->
+    <section id="verdict" class="py-16 sm:py-24 px-4 sm:px-6 border-t-2 border-zinc-800">
+      <div class="max-w-5xl mx-auto">
+        <div class="bg-limeNeon text-black border-4 border-black brutal-shadow p-7 sm:p-12 rounded-lg relative overflow-hidden">
+          <!-- Фонова постерна типографіка -->
+          <div class="hidden md:block absolute -right-4 -bottom-4 font-display font-black text-7xl text-black/10 select-none pointer-events-none" aria-hidden="true">
+            VERDICT
+          </div>
+
+          <div class="relative z-10">
+            <span class="inline-block font-mono text-xs font-extrabold uppercase bg-black text-limeNeon px-3 py-1 mb-4 rounded-sm">
+              РОЗДІЛ 05 // ВИСНОВОК
+            </span>
+
+            <h2 class="font-display font-black text-2xl sm:text-4xl leading-tight mb-5">
+              ВАЙБКОДІНГ НЕ ЗАМІНЮЄ ІНЖЕНЕРА — ВІН ЗМІНЮЄ ЙОГО РОЛЬ
+            </h2>
+
+            <p class="text-base sm:text-lg font-medium leading-relaxed max-w-3xl mb-4">
+              Вайбкодінг — це потужний підсилювач, який прибирає рутину та відкриває безпрецедентну швидкість реалізації ідей. Проте штучний інтелект не несе відповідальності за безпеку даних, стабільність архітектури чи наслідки помилок у продакшені.
+            </p>
+
+            <p class="text-base sm:text-lg font-bold leading-relaxed max-w-3xl">
+              У сучасному світі програміст поступово перестає бути «набирачем коду» і стає архітектором, постановником задач та суворим рев'юером. Найвищі результати отримують ті, хто поєднує швидкість ШІ-інструментів із глибоким інженерним мисленням.
+            </p>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-black text-white px-4 py-2 border-2 border-black rounded-sm">
+                ШІ — генерація та швидкість
+              </span>
+              <span class="font-mono text-xs sm:text-sm font-extrabold bg-white text-black px-4 py-2 border-2 border-black rounded-sm">
+                Людина — архітектура, контроль і відповідальність
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       8. МІНІМАЛІСТИЧНИЙ ЧИСТИЙ ФУТЕР
+  ===================================================================== -->
+  <footer class="relative z-10 bg-black border-t-2 border-zinc-800 py-8 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <span class="font-display font-black text-sm bg-limeNeon text-black px-2.5 py-1 border border-black rounded-sm">VIBE//CODE</span>
+        <span class="font-mono text-xs text-inkSecondary">
+          Вайбкодінг у сучасному світі: переваги та недоліки • 2026
+        </span>
+      </div>
+
+      <a
+        href="#top"
+        class="font-mono text-xs font-extrabold uppercase bg-card text-inkPrimary px-4 py-2.5 border-2 border-zinc-700 hover:border-limeNeon hover:text-limeNeon transition-colors rounded"
+      >
+        Нагору ↑
+      </a>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       JAVASCRIPT: ДОСТУПНІСТЬ ШРИФТУ, ПРОГРЕС ЧИТАННЯ ТА МОБІЛЬНЕ МЕНЮ
+  ===================================================================== -->
+  <script>
+    /* ---------------------------------------------------------------------
+       1. ТОСТ-СПОВІЩЕННЯ (замість alert)
+    --------------------------------------------------------------------- */
+    let toastTimer = null;
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toastMessage');
+      if (!toast || !msg) return;
+
+      msg.textContent = text;
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-3');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2000);
+    }
+
+    /* ---------------------------------------------------------------------
+       2. ПЕРЕМИКАЧ РОЗМІРУ ШРИФТУ (A- / A / A+)
+    --------------------------------------------------------------------- */
+    const MIN_FONT = 15;
+    const DEFAULT_FONT = 16;
+    const MAX_FONT = 20;
+    let currentFontSize = DEFAULT_FONT;
+
+    function applyFontSize(size) {
+      currentFontSize = Math.min(MAX_FONT, Math.max(MIN_FONT, size));
+      document.documentElement.style.setProperty('--base-font-size', currentFontSize + 'px');
+      try {
+        localStorage.setItem('vibecode_font_size', String(currentFontSize));
+      } catch (err) {
+        // Ігноруємо обмеження localStorage в ізольованому середовищі
+      }
+    }
+
+    function changeFontSize(delta) {
+      applyFontSize(currentFontSize + delta);
+      showToast(`Розмір шрифту: ${currentFontSize}px`);
+    }
+
+    function resetFontSize() {
+      applyFontSize(DEFAULT_FONT);
+      showToast('Стандартний розмір шрифту (16px)');
+    }
+
+    try {
+      const savedSize = parseInt(localStorage.getItem('vibecode_font_size'), 10);
+      if (!isNaN(savedSize)) applyFontSize(savedSize);
+    } catch (err) {
+      applyFontSize(DEFAULT_FONT);
+    }
+
+    /* ---------------------------------------------------------------------
+       3. ІНДИКАТОР ПРОГРЕСУ ЧИТАННЯ
+    --------------------------------------------------------------------- */
+    const progressBar = document.getElementById('readingProgressBar');
+    const progressWrap = document.getElementById('readingProgressWrap');
+
+    function updateReadingProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = docHeight > 0 ? Math.min(100, Math.max(0, Math.round((scrollTop / docHeight) * 100))) : 0;
+
+      if (progressBar) progressBar.style.width = percent + '%';
+      if (progressWrap) progressWrap.setAttribute('aria-valuenow', String(percent));
+    }
+
+    window.addEventListener('scroll', updateReadingProgress, { passive: true });
+    window.addEventListener('resize', updateReadingProgress);
+    updateReadingProgress();
+
+    /* ---------------------------------------------------------------------
+       4. МОБІЛЬНЕ МЕНЮ
+    --------------------------------------------------------------------- */
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileNav.classList.toggle('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', String(!isHidden));
+      });
+
+      document.querySelectorAll('.mobile-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  </script>
+</body>
+</html>
